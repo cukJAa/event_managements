@@ -13,6 +13,6 @@ urlpatterns = [
     path('single-blog/', views.single_blog, name='single_blog'),
     path('events/', views.event_list, name='event_list'),
     path('events/new/', views.event_create, name='event_create'),
-    path('', views.performer, name='performer'),
-    path('', views.index, name='home'),  # Set contact view as the default
+    path('performer/', views.performer, name='performer'),
+    path('', views.index, name='home'),  
 ]
