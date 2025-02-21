@@ -1,12 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Event, Location
 
 def event_list(request):
     events = Event.objects.all()
-    return render(request, 'event_list.html', {'events': events})
+    return render(request, 'events.html', {'events': events})
 
 def performer(request):
-    return render(request, 'performer.html')
+    events = Event.objects.all()
+    return render(request, 'events.html', {'events': events})
 
 def event_create(request):
     return render(request, 'event_create.html')
@@ -18,7 +19,13 @@ def about(request):
     return render(request, 'about.html')
 
 def program(request):
-    return render(request, 'program.html')
+    events = Event.objects.all()
+    print(events)  # Debugging statement
+    return render(request, 'program.html', {'events': events})
 
 def index(request):
     return render( request, 'index.html')
+
+def ticket_details(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    return render(request, 'ticket_details.html', {'event': event})
