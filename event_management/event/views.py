@@ -20,18 +20,5 @@ def about(request):
 def program(request):
     return render(request, 'program.html')
 
-def venue(request):
-    return render(request, 'venue.html')
-
-def elements(request):
-    return render(request, 'elements.html')
-
-def blog(request):
-    return render(request, 'blog.html')
-
-def single_blog(request):
-    return render(request, 'single_blog.html')
-
-
 def index(request):
     return render( request, 'index.html')
