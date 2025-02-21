@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Event, Location
+from datetime import datetime
 
 def event_list(request):
     events = Event.objects.all()
@@ -29,3 +30,11 @@ def index(request):
 def ticket_details(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     return render(request, 'ticket_details.html', {'event': event})
+
+def home(request):
+    events = Event.objects.all()
+    return render(request, 'index.html', {'events': events})
+
+def event_details(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    return render(request, 'event_details.html', {'event': event})
