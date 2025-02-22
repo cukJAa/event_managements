@@ -9,10 +9,6 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'eventcon-master/img/favicon1.png' %}">
-    <!-- Place favicon.ico in the root directory -->
-
     <!-- CSS here -->
     <link rel="stylesheet" href="{% static 'eventcon-master/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'eventcon-master/css/owl.carousel.min.css' %}">
@@ -26,9 +22,6 @@
     <link rel="stylesheet" href="{% static 'eventcon-master/css/slicknav.css' %}">
     <link rel="stylesheet" href="{% static 'eventcon-master/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'eventcon-master/css/custom.css' %}">
-
-    <link rel="stylesheet" href="css/style.css">
-    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 </head>
 
 <body>
@@ -72,6 +65,11 @@
                                     <div class="book_btn d-none d-lg-block">
                                         <a href="#">Buy Tickets</a>
                                     </div>
+                                    {% if user.is_authenticated and user.is_organizer %}
+                                    <div class="book_btn d-none d-lg-block">
+                                        <a href="{% url 'create_event' %}">Create Event</a>
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="col-12">
