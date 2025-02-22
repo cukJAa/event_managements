@@ -1,0 +1,17 @@
+{% extends "performer.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ event.name }}</h1>
+    <img src="{{ event.image.url }}" class="img-fluid" alt="{{ event.name }}">
+    
+    <p><strong>Date:</strong> {{ event.start_time|date:"F j, Y, g:i a" }} - {{ event.end_time|date:"F j, Y, g:i a" }}</p>
+    <p><strong>Location:</strong> {{ event.location.name }}</p>
+    <p>{{ event.description }}</p>
+
+    {% if request.user == event.organizer %}
+        <a href="{% url 'event_update' event.id %}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'event_delete' event.id %}" class="btn btn-danger">Delete</a>
+    {% endif %}
+</div>
+{% endblock %}

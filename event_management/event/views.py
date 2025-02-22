@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Event, Location
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib import messages
+from .forms import EventForm
 
 def event_list(request):
     events = Event.objects.all()
@@ -22,3 +25,76 @@ def program(request):
 
 def index(request):
     return render( request, 'index.html')
+
+
+def event_list(request):
+    """Display all events (attendees see all, organizers see only their own)."""
+    if request.user.is_authenticated and request.user.type == "organizer":
+        events = Event.objects.filter(organizer=request.user)
+    else:
+        events = Event.objects.all()
+    
+    return render(request, "event_list.html", {"events": events})
+
+def event_detail(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    return render(request, 'event_detail.html', {'event': event})
+
+
+@login_required
+@permission_required("event_management.add_event", raise_exception=True)
+def event_create(request):
+    """Allow organizers to create an event."""
+    if request.user.type != "organizer":
+        messages.error(request, "Only organizers can create events.")
+        return redirect("event_list")
+
+    if request.method == "POST":
+        form = EventForm(request.POST)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.organizer = request.user  # Assign event to logged-in organizer
+            event.save()
+            messages.success(request, "Event created successfully!")
+            return redirect("event_list")
+    else:
+        form = EventForm()
+    
+    return render(request, "event_create.html", {"form": form})
+
+@login_required
+@permission_required("event_management.change_event", raise_exception=True)
+def event_update(request, event_id):
+    """Allow an organizer to edit their own event."""
+    event = get_object_or_404(Event, id=event_id)
+
+    if request.user != event.organizer:
+        messages.error(request, "You can only edit your own events.")
+        return redirect("event_list")
+
+    if request.method == "POST":
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Event updated successfully!")
+            return redirect("event_list")
+    else:
+        form = EventForm(instance=event)
+    
+    return render(request, "event_create.html", {"form": form})
+
+@login_required
+@permission_required("event_management.delete_event", raise_exception=True)
+def event_delete(request, event_id):
+    """Allow an organizer to delete their own event."""
+    event = get_object_or_404(Event, id=event_id)
+
+    if request.user != event.organizer:
+        messages.error(request, "You can only delete your own events.")
+        return redirect("event_list")
+
+    event.delete()
+    messages.success(request, "Event deleted successfully!")
+    return redirect("event_list")
+
+
