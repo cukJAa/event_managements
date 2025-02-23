@@ -103,22 +103,45 @@ def event_create(request):
 def event_update(request, event_id):
     """Allow an organizer to edit their own event."""
     event = get_object_or_404(Event, id=event_id)
+    locations = Location.objects.all()
 
     if request.user != event.organizer:
         messages.error(request, "You can only edit your own events.")
-        return redirect("events")
+        return redirect("organizer_event_list")
+
+    existing_tickets = list(event.tickets.all())  # Fetch all related tickets
 
     if request.method == "POST":
-        form = EventForm(request.POST, instance=event)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Event updated successfully!")
-            return redirect("events")
-    else:
-        form = EventForm(instance=event)
-    
-    return render(request, "event_create.html", {"form": form})
+        event_form = EventForm(request.POST, request.FILES, instance=event)
+        ticket_forms = [
+            TicketForm(request.POST, prefix=str(i), instance=existing_tickets[i]) if i < len(existing_tickets) 
+            else TicketForm(request.POST, prefix=str(i))  # Create new forms if fewer than 3 tickets exist
+            for i in range(3)
+        ]
 
+        if event_form.is_valid() and all([tf.is_valid() for tf in ticket_forms]):
+            event = event_form.save()
+            for tf in ticket_forms:
+                ticket = tf.save(commit=False)
+                ticket.event = event
+                ticket.save()
+            messages.success(request, "Event and tickets updated successfully!")
+            return redirect(reverse("organizer_event_list"))
+
+    else:
+        event_form = EventForm(instance=event)
+        ticket_forms = [
+            TicketForm(prefix=str(i), instance=existing_tickets[i]) if i < len(existing_tickets) 
+            else TicketForm(prefix=str(i))  # Create empty forms if there are fewer than 3 existing tickets
+            for i in range(3)
+        ]
+    
+    return render(request, "update_event.html", {
+        "form": event_form, 
+        "event": event, 
+        "locations": locations, 
+        "ticket_forms": ticket_forms
+    })
 @login_required
 # @permission_required("event_management.delete_event", raise_exception=True)
 def event_delete(request, event_id):
