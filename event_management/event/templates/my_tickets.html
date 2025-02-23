@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Tickets</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            background-image: url("{% static 'images/background.jpg' %}"); /* Use the same background image as other pages */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+        .tickets-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .tickets-container h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .tickets-container .ticket {
+            margin-bottom: 20px;
+        }
+        .tickets-container .ticket p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="tickets-container">
+        <h3>My Tickets</h3>
+        {% for ticket in tickets %}
+            <div class="ticket">
+                <p><strong>Event:</strong> {{ ticket.event_name }}</p>
+                <p><strong>Category:</strong> {{ ticket.category }}</p>
+                <p><strong>Quantity:</strong> {{ ticket.quantity }}</p>
+                <p><strong>Price:</strong> ${{ ticket.price }}</p>
+                <hr>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -7,7 +7,6 @@ from .models import Event, Location
 from ticket.models import Ticket
 from datetime import datetime
 
-
 def performer(request):
     events = Event.objects.all()
     return render(request, 'events.html', {'events': events})
@@ -152,3 +151,49 @@ def event_delete(request, event_id):
 #         ticket_forms = [TicketForm(prefix=str(i)) for i in range(3)]  # Assuming 3 ticket categories
 
 #     return render(request, 'create_event.html', {'event_form': event_form, 'ticket_forms': ticket_forms})
+
+def purchase_tickets(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    if request.method == 'POST':
+        total_amount = 0
+        tickets = []
+        for ticket in event.tickets.all():
+            quantity = int(request.POST.get(f'ticket_{ticket.id}', 0))
+            if quantity > 0:
+                total_amount += float(ticket.price) * quantity
+                ticket.available_quantity -= quantity
+                ticket.save()
+                tickets.append({
+                    'category': ticket.category,
+                    'quantity': quantity,
+                    'price': float(ticket.price) * quantity,
+                    'event_name': event.name  # Include event name
+                })
+        
+        # Store ticket details and total amount in session
+        request.session['tickets'] = tickets
+        request.session['total_amount'] = total_amount
+        
+        # Redirect to payment form
+        return render(request, 'payment.html', {
+            'event': event,
+            'total_amount': total_amount,
+            'tickets': tickets
+        })
+    return render(request, 'event/ticket_details.html', {'event': event})
+
+def payment_success(request):
+    # Retrieve the ticket details and total amount from the session
+    tickets = request.session.get('tickets', [])
+    total_amount = request.session.get('total_amount', 0)
+    return render(request, 'payment_success.html', {
+        'tickets': tickets,
+        'total_amount': total_amount
+    })
+
+def my_tickets(request):
+    # Retrieve the user's purchased tickets from the session or database
+    tickets = request.session.get('tickets', [])
+    return render(request, 'my_tickets.html', {
+        'tickets': tickets
+    })
