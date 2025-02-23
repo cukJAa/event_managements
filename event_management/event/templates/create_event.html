@@ -11,12 +11,16 @@
 
     <!-- CSS here -->
     <link rel="stylesheet" href="{% static 'eventcon-master/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/slicknav.css' %}">
     <link rel="stylesheet" href="{% static 'eventcon-master/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/custom.css' %}">
 </head>
 
-<body>
+<body style="background-image: url('{% static 'eventcon-master/img/background.jpg' %}'); background-size: cover;">
     <header>
-        <div class="header-area ">
+        <div class="header-area">
             <div id="sticky-header" class="main-header-area">
                 <div class="container">
                     <div class="header_bottom_border">
@@ -29,13 +33,17 @@
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6">
-                                <div class="main-menu  d-none d-lg-block">
-                                    <nav>
+                                <div class="main-menu d-none d-lg-block">
+                                    <nav class="full-width-nav">
                                         <ul id="navigation">
-                                            <li><a href="{% url 'home' %}">home</a></li>
+                                            <li><a href="{% url 'home' %}">Home</a></li>
                                             <li><a href="{% url 'events' %}">Events</a></li>
+
                                             <li><a href="{% url 'about' %}">about</a></li>
                                             <li><a href="{% url 'organizer_event_list' %}">My Events</a></li>
+
+                                            <li><a href="{% url 'about' %}">About</a></li>
+
                                             <li><a href="{% url 'contact' %}">Contact</a></li>
                                         </ul>
                                     </nav>
@@ -85,7 +93,7 @@
             </div>
             <div class="form-group">
                 <label for="location">Location</label>
-                <select class="form-control" id="location" name="location" >
+                <select class="form-control" id="location" name="location">
                     {% for location in locations %}
                     <option value="{{ location.id }}">{{ location.name }}</option>
                     {% endfor %}
@@ -118,6 +126,9 @@
     <!-- JS here -->
     <script src="{% static 'eventcon-master/js/vendor/jquery-1.12.4.min.js' %}"></script>
     <script src="{% static 'eventcon-master/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/gijgo.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/slicknav.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/main.js' %}"></script>
 </body>
 
 </html>

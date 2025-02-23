@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Success</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            background-image: url("{% static 'images/background.jpg' %}"); /* Use the same background image as other pages */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .success-container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .success-container h3 {
+            margin-bottom: 20px;
+            color: #28a745;
+        }
+        .success-container p {
+            font-size: 18px;
+            color: #333;
+        }
+        .success-container .receipt {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .success-container .receipt p {
+            margin: 5px 0;
+        }
+        .success-container a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .success-container a:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <h3>Payment Successful!</h3>
+        <p>Thank you for your purchase.</p>
+        <div class="receipt">
+            <h4>Receipt</h4>
+            {% for ticket in tickets %}
+                <p>Category: {{ ticket.category }}</p>
+                <p>Quantity: {{ ticket.quantity }}</p>
+                <p>Price: ${{ ticket.price }}</p>
+                <hr>
+            {% endfor %}
+            <p><strong>Total Amount: ${{ total_amount }}</strong></p>
+        </div>
+        <a href="{% url 'home' %}">Return to Home</a>
+        <a href="{% url 'my_tickets' %}" style="margin-left: 10px;">My Tickets</a>
+    </div>
+</body>
+</html>
