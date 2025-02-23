@@ -124,4 +124,4 @@ def organizer_login(request):
 def organizer_logout(request):
     auth_logout(request)
     messages.success(request, "You have been logged out.")
-    return redirect(reverse("home"))
+    return redirect(reverse('home'))
