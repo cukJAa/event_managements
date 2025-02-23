@@ -18,6 +18,8 @@ class Ticket(models.Model):
     available_quantity = models.PositiveIntegerField()  
     # qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)  
 
+    objects = models.Manager()
+
     def __str__(self):
         return f"{self.category} - {self.price}"
     

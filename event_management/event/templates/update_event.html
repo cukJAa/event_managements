@@ -1,0 +1,111 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Update Event</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/style.css' %}">
+</head>
+
+<body>
+    <header>
+        <div class="header-area ">
+            <div id="sticky-header" class="main-header-area">
+                <div class="container">
+                    <div class="header_bottom_border">
+                        <div class="row align-items-center">
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="logo">
+                                    <a href="{% url 'home' %}">
+                                        <img src="{% static 'eventcon-master/img/logo1.png' %}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6">
+                                <div class="main-menu  d-none d-lg-block">
+                                    <nav>
+                                        <ul id="navigation">
+                                            <li><a href="{% url 'home' %}">home</a></li>
+                                            <li><a href="{% url 'events' %}">Events</a></li>
+                                            <li><a href="#">pages <i class="ti-angle-down"></i></a>
+                                                <ul class="submenu">
+                                                    <li><a href="{% url 'about' %}">about</a></li>
+                                                    <li><a href="{% url 'program' %}">Event</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="{% url 'contact' %}">Contact</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+                                <div class="buy_tkt">
+                                    <div class="book_btn d-none d-lg-block">
+                                        <a href="#">Buy Tickets</a>
+                                    </div>
+                                    {% if user.is_authenticated and user.is_organizer %}
+                                    <div class="book_btn d-none d-lg-block">
+                                        <a href="{% url 'event_create' %}">Create Event</a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mobile_menu d-block d-lg-none"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        <h2>Update Event</h2>
+        <form action="{% url 'event_update' event.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Event Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ form.name.value }}" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required>{{ form.description.value }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="start_time">Start Time</label>
+                <input type="datetime-local" class="form-control" id="start_time" name="start_time" value="{{ form.start_time.value|date:'Y-m-d\TH:i' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="end_time">End Time</label>
+                <input type="datetime-local" class="form-control" id="end_time" name="end_time" value="{{ form.end_time.value|date:'Y-m-d\TH:i' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <select class="form-control" id="location" name="location">
+                    {% for location in locations %}
+                    <option value="{{ location.id }}" {% if form.location.value == location.id %}selected{% endif %}>{{ location.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="image">Event Image</label>
+                <input type="file" class="form-control-file" id="image" name="image">
+            </div>
+            <button type="submit" class="btn btn-primary">Update Event</button>
+        </form>
+    </div>
+
+    <!-- JS here -->
+    <script src="{% static 'eventcon-master/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/bootstrap.min.js' %}"></script>
+</body>
+
+</html>

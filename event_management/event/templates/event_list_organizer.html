@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Events</title>
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'eventcon-master/css/style.css' %}">
+    <style>
+        .card {
+            background-color: rgba(33, 57, 61, 0.6); /* Transparent background */
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: white; /* Set text color to white */
+            width: 75%; /* Set card width to 75% */
+            margin: 0 auto; /* Center the card */
+            border-radius: 15px; /* Rounded edges */
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white; /* Ensure title text is white */
+        }
+        .card-text {
+            font-size: 1rem;
+            color: white; /* Ensure text is white */
+        }
+        .btn-primary {
+            margin-top: 10px;
+        }
+        .vr {
+            height: 100%;
+            border-left: 1px solid #ccc;
+        }
+        .program_details_area {
+            margin-top: -50px; /* Move the card section up */
+        }
+        .see-tickets {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .event-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .event-info i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+    <!-- header-start -->
+    <header>
+        <div class="header-area ">
+            <div id="sticky-header" class="main-header-area">
+                <div class="container">
+                    <div class="header_bottom_border">
+                        <div class="row align-items-center">
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="logo">
+                                    <a href="{% url 'home' %}">
+                                        <img src="{% static 'eventcon-master/img/logo1.png' %}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6">
+                                <div class="main-menu  d-none d-lg-block">
+                                    <nav>
+                                        <ul id="navigation">
+                                            <li><a href="{% url 'home' %}">home</a></li>
+                                            <li><a href="{% url 'events' %}">Events</a></li>
+                                            <li><a href="{% url 'about' %}">about</a></li>
+                                            <li><a href="{% url 'contact' %}">Contact</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+                                <div class="buy_tkt">
+                                    <div class="book_btn d-none d-lg-block">
+                                        <a href="#">Buy Tickets</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mobile_menu d-block d-lg-none"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header-end -->
+
+    <!-- bradcam_area -->
+    <div class="bradcam_area">
+        <div class="single_bradcam  d-flex align-items-center bradcam_bg_1 overlay">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-xl-12">
+                        <div class="bradcam_text text-center">
+                            <div class="shape_1 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
+                                <img src="{% static 'eventcon-master/img/shape/shape_1.svg' %}" alt="">
+                            </div>
+                            <div class="shape_2 wow fadeInDown" data-wow-duration="1s" data-wow-delay=".3s">
+                                <img src="{% static 'eventcon-master/img/shape/shape_2.svg' %}" alt="">
+                            </div>
+                            <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">Events</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- bradcam_area end -->
+
+    <div class="program_details_area detials_bg_1 overlay2">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                {% if messages %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+                {% if events %}
+                    {% for event in events %}
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="event-info">
+                                                <i class="fa fa-clock-o"></i>
+                                                <p class="card-text"><strong>Start Time:</strong> {{ event.start_time }}</p>
+                                            </div>
+                                            <div class="event-info">
+                                                <i class="fa fa-clock-o"></i>
+                                                <p class="card-text"><strong>End Time:</strong> {{ event.end_time }}</p>
+                                            </div>
+                                            <div class="event-info">
+                                                <i class="fa fa-map-marker"></i>
+                                                <p class="card-text"><strong>Location:</strong> {{ event.location.name }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 d-flex align-items-center">
+                                            <div class="vr"></div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h2 class="card-title">{{ event.name }}</h2>
+                                            <p class="card-text">{{ event.description }}</p>
+                                        </div>
+                                        <div class="col-md-3 flex-column see-tickets d-flex align-items-center justify-content-end">
+                                            <a href="{% url 'event_update' event.id %}" class="btn btn-primary">Update</a>
+                                            <a href="{% url 'event_delete' event.id %}" class="btn btn-danger ml-2">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No events found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JS here -->
+    <script src="{% static 'eventcon-master/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/popper.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/ajax-form.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/waypoints.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/scrollIt.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/wow.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/gijgo.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/nice-select.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/tilt.jquery.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/plugins.js' %}"></script>
+
+    <!--contact js-->
+    <script src="{% static 'eventcon-master/js/contact.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/jquery.form.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'eventcon-master/js/mail-script.js' %}"></script>
+
+    <script src="{% static 'eventcon-master/js/main.js' %}"></script>
+    <script>
+        // Fade out alert messages after 5 seconds
+        setTimeout(function() {
+            $('.alert').alert('close');
+        }, 3000);
+    </script>
+</body>
+
+</html>

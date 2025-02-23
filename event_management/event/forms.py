@@ -5,7 +5,7 @@ from ticket.models import Ticket
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'description', 'start_time', 'end_time', 'location', 'organizer', 'image']
+        fields = ['name', 'description', 'start_time', 'end_time', 'location', 'image']
 
 class TicketForm(forms.ModelForm):
     class Meta:
