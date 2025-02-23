@@ -19,7 +19,6 @@ class Event(models.Model):
     organizer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="events")
     image = models.ImageField(upload_to='event_images/', null=True, blank=True)
 
-
     def __str__(self):
         return self.name
 

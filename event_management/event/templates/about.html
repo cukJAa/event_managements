@@ -9,10 +9,6 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
-    <!-- Place favicon.ico in the root directory -->
-
     <!-- CSS here -->
     <link rel="stylesheet" href="{% static 'eventcon-master/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'eventcon-master/css/owl.carousel.min.css' %}">
@@ -25,7 +21,20 @@
     <link rel="stylesheet" href="{% static 'eventcon-master/css/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'eventcon-master/css/slicknav.css' %}">
     <link rel="stylesheet" href="{% static 'eventcon-master/css/style.css' %}">
-    <!-- <link rel="stylesheet" href="{% static 'eventcon-master/css/responsive.css' %}"> -->
+    <style>
+        .thumb img {
+            width: 100%;
+            height: 200px; /* Set a fixed height */
+            object-fit: cover; /* Ensure the image maintains its aspect ratio */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.7); /* Add glow effect */
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .thumb img:hover {
+            box-shadow: 0 0 30px rgba(255, 255, 255, 1); /* Increase glow on hover */
+        }
+    </style>
 </head>
 
 <body>
@@ -53,11 +62,7 @@
                                         <ul id="navigation">
                                             <li><a href="{% url 'home' %}">home</a></li>
                                             <li><a href="{% url 'events' %}">Events</a></li>
-                                            <li><a href="#">pages <i class="ti-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="{% url 'about' %}">about</a></li>
-                                                    <li><a href="{% url 'program' %}">Event</a></li>
-                                                </ul>
+                                            <li><a href="{% url 'about' %}">about</a></li>
                                             <li><a href="{% url 'contact' %}">Contact</a></li>
                                         </ul>
                                     </nav>
@@ -66,7 +71,7 @@
                             <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                                 <div class="buy_tkt">
                                     <div class="book_btn d-none d-lg-block">
-                                        <a href="#">Buy Tickets</a>
+                                        <a href="{% url 'events' %}">Buy Tickets</a>
                                     </div>
                                 </div>
                             </div>
@@ -110,10 +115,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="section_title text-center mb-80">
-                        <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">About Program</h3>
-                        <p class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">The event regularly
-                            attracts a diverse range of attendees from around the world, across different professions,
-                            and with different.</p>
+                        <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">About EVENTIFY</h3>
+                        <p class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">Discover, book, and enjoy the best events in Albania all in one place!</p>
                     </div>
                 </div>
             </div>
@@ -132,9 +135,7 @@
                     <div class="about_info pl-68">
                         <h4 class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">It’s time to book your
                             seat</h4>
-                        <p class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".6s">The event regularly
-                            attracts a diverse range of attendees from around the world, across different professions,
-                            and with different levels of experience transform your business.</p>
+                        <p class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".6s">Eventify is Albania’s go-to platform for discovering and booking events. From nightlife and concerts to festivals and cultural gatherings, we make event discovery seamless. Book tickets easily, explore top events, and enjoy exclusive deals all in one place!</p>
                         <a href="#" class="boxed-btn3  wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".7s">Buy
                             Tickets</a>
                     </div>
@@ -150,7 +151,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section_title mb-80">
-                        <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">Performer</h3>
+                        <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">SERVICES</h3>
                     </div>
                 </div>
             </div>
@@ -160,44 +161,44 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="single_performer wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
                                 <div data-tilt class="thumb">
-                                    <img src="{% static 'eventcon-master/img/performer/1.png' %}" alt="">
+                                    <img src="{% static 'eventcon-master/img/services/2.jpg' %}" alt="">
                                 </div>
                                 <div class="performer_heading">
-                                    <h4>Mr. Zosoldos</h4>
-                                    <span>Acoustic drum</span>
+                                    <h4>Seamless Experience</h4>
+                                    <span>Effortless event browsing and booking.</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="single_performer wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
                                 <div data-tilt class="thumb">
-                                    <img src="{% static 'eventcon-master/img/performer/2.png' %}" alt="">
+                                    <img src="{% static 'eventcon-master/img/services/1.jpg' %}" alt="">
                                 </div>
                                 <div class="performer_heading">
-                                    <h4>Protik Hasan</h4>
-                                    <span>Acoustic drum</span>
+                                    <h4>Event Discovery</h4>
+                                    <span>Find the best events near you.</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md=6">
                             <div class="single_performer wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
                                 <div data-tilt class="thumb">
-                                    <img src="{% static 'eventcon-master/img/performer/3.png' %}" alt="">
+                                    <img src="{% static 'eventcon-master/img/services/4.jpg' %}" alt="">
                                 </div>
                                 <div class="performer_heading">
-                                    <h4>Salmon Vicky</h4>
-                                    <span>Acoustic drum</span>
+                                    <h4>Easy Booking</h4>
+                                    <span>Get your tickets in a few clicks.</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="single_performer wow fadeInUp" data-wow-duration="1s" data-wow-delay=".6s">
                                 <div data-tilt class="thumb">
-                                    <img src="{% static 'eventcon-master/img/performer/4.png' %}" alt="">
+                                    <img src="{% static 'eventcon-master\img\services\3.jpg' %}" alt="">
                                 </div>
                                 <div class="performer_heading">
-                                    <h4>Filaris Habol</h4>
-                                    <span>Acoustic drum</span>
+                                    <h4>Exclusive Deals</h4>
+                                    <span>Enjoy special offers and discounts.</span>
                                 </div>
                             </div>
                         </div>
