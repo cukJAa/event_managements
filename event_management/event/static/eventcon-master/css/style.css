@@ -991,6 +991,9 @@ h3 {
 .header-area .main-header-area {
   background: transparent;
   padding-top: 28px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 @media (max-width: 767px) {
@@ -1063,15 +1066,12 @@ h3 {
 
 /* line 58, ../../Arafath/CL/December/236. Event-02/HTML/scss/_header.scss */
 .header-area .main-header-area .buy_tkt {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
-  -webkit-align-items: center;
-  -moz-align-items: center;
-  -ms-align-items: center;
-  align-items: center;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
   -webkit-justify-content: flex-end;
   -moz-justify-content: flex-end;
   -ms-justify-content: flex-end;

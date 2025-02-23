@@ -18,6 +18,9 @@ urlpatterns = [
     path('ticket/<int:event_id>/', views.ticket_details, name='ticket_details'),
     path('', views.home, name='home'),  # Use the home view as the home view
     path('event/<int:event_id>/', views.event_details, name='event_details'),
+    path('purchase/<int:event_id>/', views.purchase_tickets, name='purchase_tickets'),
+    path('payment_success/', views.payment_success, name='payment_success'),
+    path('my_tickets/', views.my_tickets, name='my_tickets'),
 ]
 
 if settings.DEBUG:

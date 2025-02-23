@@ -90,7 +90,7 @@ def signup_as_organizer(request):
         user = User.objects.create_user(email=email, username=email, password=password, first_name=first_name, last_name=last_name)
         # Set the role to 'organizer'
         user.type = User.Types.ORGANIZER
-        user.save()
+        user.save(update_fields=["type"])
 
         content_type = ContentType.objects.get_for_model(Event)
         permissions = Permission.objects.filter(content_type=content_type)

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            background-image: url("{% static 'images/background.jpg' %}"); /* Use the same background image as other pages */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+        .payment-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .payment-container h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .payment-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .payment-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .payment-container input::placeholder {
+            color: #999;
+        }
+        .payment-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .payment-container button:hover {
+            background-color: #218838;
+        }
+        .ticket-details {
+            margin-bottom: 20px;
+        }
+        .ticket-details p {
+            margin: 5px 0;
+        }
+    </style>
+    <script>
+        function formatCardNumber(input) {
+            const value = input.value.replace(/\D/g, '').substring(0, 16);
+            const formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+            input.value = formattedValue;
+        }
+
+        function formatExpiryDate(input) {
+            const value = input.value.replace(/\D/g, '').substring(0, 4);
+            const formattedValue = value.replace(/(\d{2})(?=\d)/g, '$1/');
+            input.value = formattedValue;
+        }
+
+        function formatCVV(input) {
+            const value = input.value.replace(/\D/g, '').substring(0, 3);
+            input.value = value;
+        }
+    </script>
+</head>
+<body>
+    <div class="payment-container">
+        <h3>Complete your payment</h3>
+        <div class="ticket-details">
+            <h4>Ticket Details</h4>
+            {% for ticket in tickets %}
+                <p>Category: {{ ticket.category }}</p>
+                <p>Quantity: {{ ticket.quantity }}</p>
+                <p>Price: ${{ ticket.price }}</p>
+                <hr>
+            {% endfor %}
+        </div>
+        <p>Total Amount: ${{ total_amount }}</p>
+        <form id="payment-form" method="post" action="{% url 'payment_success' %}">
+            {% csrf_token %}
+            <label for="card-number">Card Number:</label>
+            <input type="text" id="card-number" name="card_number" placeholder="1234 5678 9012 3456" required oninput="formatCardNumber(this)">
+            <label for="expiry-date">Expiry Date:</label>
+            <input type="text" id="expiry-date" name="expiry_date" placeholder="MM/YY" required oninput="formatExpiryDate(this)">
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" name="cvv" placeholder="123" required oninput="formatCVV(this)">
+            <button type="submit">Pay</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -268,20 +268,22 @@
             </div>
             <div id="buyTicketsSection" class="buy-tickets-section">
                 <h3>Available Tickets</h3>
-                {% for ticket in event.tickets.all %}
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ ticket.category }}</h5>
-                        <p class="card-text">Price: ${{ ticket.price }}</p>
-                        <p class="card-text">Available: {{ ticket.available_quantity }}</p>
+                <form id="ticketPurchaseForm" method="post" action="{% url 'purchase_tickets' event.id %}">
+                    {% csrf_token %}
+                    {% for ticket in event.tickets.all %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ ticket.category }}</h5>
+                            <p class="card-text">Price: ${{ ticket.price }}</p>
+                            <p class="card-text">Available: {{ ticket.available_quantity }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <input type="number" name="ticket_{{ ticket.id }}" min="0" max="{{ ticket.available_quantity }}" value="0">
+                        </div>
                     </div>
-                    <div class="card-footer">
-                        <input type="number" min="0" max="{{ ticket.available_quantity }}" value="0">
-                        <button class="btn btn-primary">Buy</button>
-                    </div>
-                </div>
-                {% endfor %}
-                <button class="btn btn-success">Confirm Purchase</button>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success">Confirm Purchase</button>
+                </form>
             </div>
         </div>
     </div>
