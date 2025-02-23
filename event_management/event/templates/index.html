@@ -49,13 +49,16 @@
                                         <ul id="navigation">
                                             <li><a href="{% url 'home' %}">home</a></li>
                                             <li><a href="{% url 'events' %}">Events</a></li>
-                                            <li><a href="#">pages <i class="ti-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="{% url 'about' %}">about</a></li>
-                                                    <li><a href="{% url 'program' %}">Event</a></li>
-                                                    
-                                                </ul>
-                                            </li>
+                                            {% if user.is_authenticated and user.is_organizer %}
+                                                <li><a href="{% url 'organizer_event_list' %}">My Events</a></li>
+                                            {% else %}
+                                                <li><a href="#">pages <i class="ti-angle-down"></i></a>
+                                                    <ul class="submenu">
+                                                        <li><a href="{% url 'about' %}">about</a></li>
+                                                        <li><a href="{% url 'program' %}">Event</a></li>
+                                                    </ul>
+                                                </li>
+                                            {% endif %}
                                             <li><a href="{% url 'user_create' %}">Register</a></li>
                                             <li><a href="{% url 'contact' %}">Contact</a></li>
                                         </ul>
@@ -69,7 +72,7 @@
                                     </div>
                                     {% if user.is_authenticated and user.is_organizer %}
                                     <div class="book_btn d-none d-lg-block">
-                                        <a href="{% url 'create_event' %}">Create Event</a>
+                                        <a href="{% url 'event_create' %}">Create Event</a>
                                     </div>
                                     {% endif %}
                                 </div>

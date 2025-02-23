@@ -52,7 +52,7 @@
                                     </div>
                                     {% if user.is_authenticated and user.is_organizer %}
                                     <div class="book_btn d-none d-lg-block">
-                                        <a href="{% url 'create_event' %}">Create Event</a>
+                                        <a href="{% url 'event_create' %}">Create Event</a>
                                     </div>
                                     {% endif %}
                                 </div>
@@ -69,7 +69,7 @@
 
     <div class="container mt-5">
         <h2>Create Event</h2>
-        <form method="post" enctype="multipart/form-data">
+        <form action="{% url 'event_create'%}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
                 <label for="name">Event Name</label>
@@ -89,7 +89,7 @@
             </div>
             <div class="form-group">
                 <label for="location">Location</label>
-                <select class="form-control" id="location" name="location" required>
+                <select class="form-control" id="location" name="location" >
                     {% for location in locations %}
                     <option value="{{ location.id }}">{{ location.name }}</option>
                     {% endfor %}
