@@ -156,8 +156,23 @@ def event_create(request):
     else:
         form = EventForm()
         locations = Location.objects.all()
+
+    ticket_forms = [TicketForm(request.POST, prefix=str(i)) for i in range(3)]  # Assuming 3 ticket categories
+
+    if event_form.is_valid() and all([tf.is_valid() for tf in ticket_forms]):
+            event = event_form.save()
+            for tf in ticket_forms:
+                ticket = tf.save(commit=False)
+                ticket.event = event
+                ticket.save()
+            messages.success(request, "Event and tickets created successfully!")
+            return redirect('events')
+    else:
+        event_form = EventForm()
+        ticket_forms = [TicketForm(prefix=str(i)) for i in range(3)]
+        
     
-    return render(request, "create_event.html", {"form": form, "locations": locations})
+    return render(request, "create_event.html", {"form": form, "locations": locations, 'ticket_forms': ticket_forms} )
 
 @login_required
 # @permission_required("event_management.change_event", raise_exception=True)
@@ -196,21 +211,21 @@ def event_delete(request, event_id):
     return redirect(reverse("organizer_event_list"))
 
 
-def create_event(request):
-    if request.method == 'POST':
-        event_form = EventForm(request.POST, request.FILES)
-        ticket_forms = [TicketForm(request.POST, prefix=str(i)) for i in range(3)]  # Assuming 3 ticket categories
+# def create_event(request):
+#     if request.method == 'POST':
+#         event_form = EventForm(request.POST, request.FILES)
+#         ticket_forms = [TicketForm(request.POST, prefix=str(i)) for i in range(3)]  # Assuming 3 ticket categories
 
-        if event_form.is_valid() and all([tf.is_valid() for tf in ticket_forms]):
-            event = event_form.save()
-            for tf in ticket_forms:
-                ticket = tf.save(commit=False)
-                ticket.event = event
-                ticket.save()
-            messages.success(request, "Event and tickets created successfully!")
-            return redirect('events')
-    else:
-        event_form = EventForm()
-        ticket_forms = [TicketForm(prefix=str(i)) for i in range(3)]  # Assuming 3 ticket categories
+#         if event_form.is_valid() and all([tf.is_valid() for tf in ticket_forms]):
+#             event = event_form.save()
+#             for tf in ticket_forms:
+#                 ticket = tf.save(commit=False)
+#                 ticket.event = event
+#                 ticket.save()
+#             messages.success(request, "Event and tickets created successfully!")
+#             return redirect('events')
+#     else:
+#         event_form = EventForm()
+#         ticket_forms = [TicketForm(prefix=str(i)) for i in range(3)]  # Assuming 3 ticket categories
 
-    return render(request, 'create_event.html', {'event_form': event_form, 'ticket_forms': ticket_forms})
+#     return render(request, 'create_event.html', {'event_form': event_form, 'ticket_forms': ticket_forms})

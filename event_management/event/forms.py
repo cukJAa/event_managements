@@ -11,8 +11,3 @@ class TicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
         fields = ['category', 'price', 'available_quantity']
-
-class TicketForm(forms.ModelForm):
-    class Meta:
-        model = Ticket
-        fields = ['category', 'price', 'available_quantity']
