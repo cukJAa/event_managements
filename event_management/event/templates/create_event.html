@@ -35,6 +35,7 @@
                                             <li><a href="{% url 'home' %}">home</a></li>
                                             <li><a href="{% url 'events' %}">Events</a></li>
                                             <li><a href="{% url 'about' %}">about</a></li>
+                                            <li><a href="{% url 'organizer_event_list' %}">My Events</a></li>
                                             <li><a href="{% url 'contact' %}">Contact</a></li>
                                         </ul>
                                     </nav>
@@ -43,7 +44,7 @@
                             <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                                 <div class="buy_tkt">
                                     <div class="book_btn d-none d-lg-block">
-                                        <a href="{% url 'events' %}">Buy Tickets</a>
+                                        <a href="{% url 'events' %}">All events</a>
                                     </div>
                                     {% if user.is_authenticated and user.is_organizer %}
                                     <div class="book_btn d-none d-lg-block">
@@ -97,15 +98,17 @@
 
             <h2>Tickets</h2>
             {% for ticket_form in ticket_forms %}
-                <div class="form-group">
-                    {{ ticket_form.category.label_tag }} {{ ticket_form.category }}
-                </div>
-                <div class="form-group">
-                    {{ ticket_form.price.label_tag }} {{ ticket_form.price }}
-                </div>
-                <div class="form-group">
-                    {{ ticket_form.available_quantity.label_tag }} {{ ticket_form.available_quantity }}
-                </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{ ticket_form.category.label_tag }} {{ ticket_form.category }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{ ticket_form.price.label_tag }} {{ ticket_form.price }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{ ticket_form.available_quantity.label_tag }} {{ ticket_form.available_quantity }}
+                        </div>
+                    </div>
             {% endfor %}
 
             <button type="submit" class="btn btn-primary">Create Event</button>

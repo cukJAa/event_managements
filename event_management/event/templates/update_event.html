@@ -42,7 +42,7 @@
                             <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                                 <div class="buy_tkt">
                                     <div class="book_btn d-none d-lg-block">
-                                        <a href="#">Buy Tickets</a>
+                                        <a href="{% url 'events' %}">All events</a>
                                     </div>
                                     {% if user.is_authenticated and user.is_organizer %}
                                     <div class="book_btn d-none d-lg-block">
@@ -93,19 +93,23 @@
                 <label for="image">Event Image</label>
                 <input type="file" class="form-control-file" id="image" name="image">
             </div>
-            <h2>Tickets</h2>
-            {% for ticket_form in ticket_forms %}
-                <div class="form-group">
-                    {{ ticket_form.category.label_tag }} {{ ticket_form.category }}
-                </div>
-                <div class="form-group">
-                    {{ ticket_form.price.label_tag }} {{ ticket_form.price }}
-                </div>
-                <div class="form-group">
-                    {{ ticket_form.available_quantity.label_tag }} {{ ticket_form.available_quantity }}
-                </div>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary">Update Event</button>
+            <div class="container mt-5">
+                <h2>Tickets</h2>
+                {% for ticket_form in ticket_forms %}
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{ ticket_form.category.label_tag }} {{ ticket_form.category }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{ ticket_form.price.label_tag }} {{ ticket_form.price }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{ ticket_form.available_quantity.label_tag }} {{ ticket_form.available_quantity }}
+                        </div>
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Update Event</button>
+            </div>
         </form>
     </div>
 
