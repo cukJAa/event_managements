@@ -34,12 +34,6 @@
                                         <ul id="navigation">
                                             <li><a href="{% url 'home' %}">home</a></li>
                                             <li><a href="{% url 'events' %}">Events</a></li>
-                                            <li><a href="#">pages <i class="ti-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="{% url 'about' %}">about</a></li>
-                                                    <li><a href="{% url 'program' %}">Event</a></li>
-                                                </ul>
-                                            </li>
                                             <li><a href="{% url 'contact' %}">Contact</a></li>
                                         </ul>
                                     </nav>
@@ -99,6 +93,18 @@
                 <label for="image">Event Image</label>
                 <input type="file" class="form-control-file" id="image" name="image">
             </div>
+            <h2>Tickets</h2>
+            {% for ticket_form in ticket_forms %}
+                <div class="form-group">
+                    {{ ticket_form.category.label_tag }} {{ ticket_form.category }}
+                </div>
+                <div class="form-group">
+                    {{ ticket_form.price.label_tag }} {{ ticket_form.price }}
+                </div>
+                <div class="form-group">
+                    {{ ticket_form.available_quantity.label_tag }} {{ ticket_form.available_quantity }}
+                </div>
+            {% endfor %}
             <button type="submit" class="btn btn-primary">Update Event</button>
         </form>
     </div>
