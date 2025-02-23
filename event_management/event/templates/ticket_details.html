@@ -60,6 +60,12 @@
         .event-location a {
             color: blue; /* Set location link color to blue */
         }
+        .event-organizer {
+            font-size: 1.5rem; /* Increase font size */
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
         .buy-tickets-section {
             display: none;
             margin-top: 20px;
@@ -184,12 +190,8 @@
                                         <ul id="navigation">
                                             <li><a href="{% url 'home' %}">home</a></li>
                                             <li><a href="{% url 'events' %}">Events</a></li>
-                                            <li><a href="#">pages <i class="ti-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="{% url 'about' %}">about</a></li>
-                                                    <li><a href="{% url 'program' %}">Event</a></li>
-                                                </ul>
-                                            </li>
+                                            <li><a href="{% url 'about' %}">about</a></li>
+                                            <li><a href="{% url 'user_create' %}">Register</a></li>
                                             <li><a href="{% url 'contact' %}">Contact</a></li>
                                         </ul>
                                     </nav>
@@ -241,12 +243,15 @@
             </div>
             <div class="content-wrapper">
                 <div class="content-left">
-                    <div class="event-date">{{ event.start_time|date:"F j, Y" }}</div>
+                    <div class="event-date">{{ event.start_time|date:"F j, Y" }} - {{ event.end_time|date:"F j, Y" }}</div>
                     <div class="event-title">{{ event.name }}</div>
                     <div class="event-description">{{ event.description }}</div>
                     <div class="event-location">
                         <i class="fa fa-map-marker"></i>
                         <a href="https://www.google.com/maps/search/?api=1&query={{ event.location.latitude }},{{ event.location.longitude }}" target="_blank">{{ event.location.name }}</a>
+                    </div>
+                    <div class="event-organizer">
+                        <strong>Organizer:</strong> {{ event.organizer.username }}
                     </div>
                     <button id="buyTicketsBtn" class="btn btn-primary">Buy Tickets</button>
                 </div>
@@ -263,39 +268,19 @@
             </div>
             <div id="buyTicketsSection" class="buy-tickets-section">
                 <h3>Available Tickets</h3>
+                {% for ticket in event.tickets.all %}
                 <div class="card">
-                    <img src="{{ event.image.url }}" alt="Normal Ticket">
                     <div class="card-body">
-                        <h5 class="card-title">Normal</h5>
-                        <p class="card-text">Price: $50</p>
+                        <h5 class="card-title">{{ ticket.category }}</h5>
+                        <p class="card-text">Price: ${{ ticket.price }}</p>
+                        <p class="card-text">Available: {{ ticket.available_quantity }}</p>
                     </div>
                     <div class="card-footer">
-                        <input type="number" min="0" max="10" value="0">
+                        <input type="number" min="0" max="{{ ticket.available_quantity }}" value="0">
                         <button class="btn btn-primary">Buy</button>
                     </div>
                 </div>
-                <div class="card">
-                    <img src="{{ event.image.url }}" alt="Gold Ticket">
-                    <div class="card-body">
-                        <h5 class="card-title">Gold</h5>
-                        <p class="card-text">Price: $100</p>
-                    </div>
-                    <div class="card-footer">
-                        <input type="number" min="0" max="10" value="0">
-                        <button class="btn btn-primary">Buy</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="{{ event.image.url }}" alt="VIP Ticket">
-                    <div class="card-body">
-                        <h5 class="card-title">VIP</h5>
-                        <p class="card-text">Price: $200</p>
-                    </div>
-                    <div class="card-footer">
-                        <input type="number" min="0" max="10" value="0">
-                        <button class="btn btn-primary">Buy</button>
-                    </div>
-                </div>
+                {% endfor %}
                 <button class="btn btn-success">Confirm Purchase</button>
             </div>
         </div>

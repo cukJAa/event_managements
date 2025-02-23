@@ -59,6 +59,7 @@
                                                     </ul>
                                                 </li>
                                             {% endif %}
+                                            <li><a href="{% url 'about' %}">about</a></li>
                                             <li><a href="{% url 'user_create' %}">Register</a></li>
                                             <li><a href="{% url 'contact' %}">Contact</a></li>
                                         </ul>
@@ -68,7 +69,7 @@
                             <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                                 <div class="buy_tkt">
                                     <div class="book_btn d-none d-lg-block">
-                                        <a href="#">Buy Tickets</a>
+                                        <a href="{% url 'events' %}">Buy Tickets</a>
                                     </div>
                                     {% if user.is_authenticated and user.is_organizer %}
                                     <div class="book_btn d-none d-lg-block">
@@ -156,10 +157,9 @@
                     <div class="col-lg-6 col-md-8">
                         <div class="footer_widget">
                             <div class="address_details text-center">
-                                <h4 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">12 Feb, 2020</h4>
-                                <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Green Avenue, New York</h3>
-                                <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">The event regularly attracts a diverse range of attendees from around the world.</p>
-                                <a href="#" class="boxed-btn3 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".6s">Buy Tickets</a>
+                                <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Tirana, Albania</h3>
+                                <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">Check the latest events here!</p>
+                                <a href="{% url 'events' %}" class="boxed-btn3 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".6s">Buy Tickets</a>
                             </div>
                         </div>
                     </div>
