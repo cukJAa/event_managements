@@ -14,6 +14,10 @@ class User(AbstractUser):
     name =models.CharField(_('Name of User'), blank=True, max_length=255)
     def get_absolute_url(self):
         return reverse('user:detail', kwargs={"username": self.username})
+    
+    @property
+    def is_organizer(self):
+        return self.type == User.Types.ORGANIZER
 
     
 class AttendeeManager(models.Manager):
